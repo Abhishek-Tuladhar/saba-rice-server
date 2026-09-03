@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 const newsletterSchema = new mongoose.Schema(
   {
@@ -9,8 +10,16 @@ const newsletterSchema = new mongoose.Schema(
       lowercase: true,
       unique: true,
     },
+    unsubscribeToken: {
+      type: String,
+      default: () => crypto.randomBytes(24).toString("hex"),
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Newsletter", newsletterSchema);
