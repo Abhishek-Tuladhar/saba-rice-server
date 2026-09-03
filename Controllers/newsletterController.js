@@ -138,14 +138,11 @@ const unsubscribeNewsletter = async (req, res, next) => {
       </body>
       </html>
     `);
-  } catch (err) {
-    next(err);
-  }
+  } catch (err) {}
 };
 
 async function sendWelcomeEmail(subscriber) {
-  const unsubscribeUrl = `${process.env.API_URL || process.env.CLIENT_URL}/api/newsletter/unsubscribe?token=${subscriber.unsubscribeToken}`;
-
+  const unsubscribeUrl = `https://saba-rice-server-seven.vercel.app/api/newsletter/unsubscribe?token=${subscriber.unsubscribeToken}`;
 
   await sendMail({
     to: subscriber.email,
