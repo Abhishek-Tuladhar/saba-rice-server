@@ -36,6 +36,8 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
@@ -70,10 +72,11 @@ app.use("/api/blogs", blogRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== "production") {
+// Only listen if running locally (not on Vercel)
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;
-
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 }
 
+// Export for Vercel serverless
 module.exports = app;
