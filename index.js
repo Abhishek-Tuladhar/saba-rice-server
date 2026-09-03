@@ -8,7 +8,7 @@ const contactRoutes = require("./Routes/contactRoutes");
 const notFound = require("./Middleware/notFound");
 const errorHandler = require("./Middleware/errorHandler");
 const newsletterRoutes = require("./Routes/newsLetterRoutes");
-const sanitize = require("./Middleware/sanitize");
+const sanitize = require("./Middleware/Sanitize");
 const blogRoutes = require("./Routes/blogRoutes");
 
 if (!process.env.MONGODB_URI) {
