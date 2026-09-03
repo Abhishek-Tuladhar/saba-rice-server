@@ -17,6 +17,7 @@ if (!process.env.MONGODB_URI) {
 }
 
 const app = express();
+app.set("trust proxy", 1);
 
 /* --------------------------------------------------
    Serve uploaded files

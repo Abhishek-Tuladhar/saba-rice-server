@@ -19,7 +19,7 @@ const submitContactForm = async (req, res, next) => {
     });
 
     // Admin notification
-    sendMail({
+    await sendMail({
       to: process.env.ADMIN_EMAIL,
       subject: `New enquiry from ${name} (${enquiryType || "general"})`,
       html: `
@@ -51,7 +51,7 @@ const submitContactForm = async (req, res, next) => {
     });
 
     // Auto-reply to submitter
-    sendMail({
+    await sendMail({
       to: email,
       subject: "We've received your enquiry — Saba Rice",
       html: `

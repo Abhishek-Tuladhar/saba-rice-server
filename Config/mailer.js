@@ -9,8 +9,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
   connectionTimeout: 10000, // 10s to establish connection
-  greetingTimeout: 10000,   // 10s to receive server greeting
-  socketTimeout: 10000,     // 10s of inactivity before giving up
+  greetingTimeout: 10000, // 10s to receive server greeting
+  socketTimeout: 10000, // 10s of inactivity before giving up
 });
 
 const sendMail = async ({ to, subject, html }) => {
@@ -23,7 +23,11 @@ const sendMail = async ({ to, subject, html }) => {
     });
     console.log(`Email sent successfully to ${to} — subject: "${subject}"`);
   } catch (err) {
-    console.error(`Email send failed for ${to} (subject: "${subject}"):`, err.message);
+    console.error(
+      `Email send failed for ${to} (subject: "${subject}"):`,
+      err.message,
+    );
+    throw err; // let the caller know it failed
   }
 };
 
