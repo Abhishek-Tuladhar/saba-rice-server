@@ -45,8 +45,25 @@ app.use(
 app.use(express.json());
 app.use(sanitize);
 
-// Connect to MongoDB
-connectDB();
+/* --------------------------------------------------
+   Kick off the DB connection immediately (don't await
+   here at module scope), but gate every request behind
+   it so no route runs against a half-open connection.
+   -------------------------------------------------- */
+const dbReady = connectDB();
+
+app.use(async (req, res, next) => {
+  try {
+    await dbReady;
+    next();
+  } catch (err) {
+    res.status(503).json({
+      success: false,
+      status: "error",
+      message: "Database unavailable, please try again shortly",
+    });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello from the server!");
